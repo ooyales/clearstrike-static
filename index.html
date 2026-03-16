@@ -108,6 +108,91 @@
   }
   .nav-cta:hover { background: var(--teal-lt) !important; color: var(--white) !important; }
 
+  /* ── Mobile nav toggle ────────────────────────────────────────────────────── */
+  .nav-toggle {
+    background: rgba(255,255,255,0.12);
+    border: none;
+    border-radius: 999px;
+    color: var(--white);
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    transition: background 0.2s ease;
+  }
+  .nav-toggle:hover {
+    background: rgba(255,255,255,0.18);
+  }
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    border-radius: 1.5px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 120;
+  }
+  .nav-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+
+  .nav-mobile {
+    position: fixed;
+    inset: 0;
+    background: rgba(17,29,51,0.96);
+    backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    padding: 120px 40px 60px;
+    transform: translateY(-100%);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 130;
+  }
+  .nav-mobile.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-mobile a {
+    font-size: 18px;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .nav-mobile .nav-cta {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
   /* ── Hero ────────────────────────────────────────────────────────────────── */
   .hero {
     min-height: 100vh;
@@ -1061,8 +1146,7 @@
     .footer-inner { grid-template-columns: 1fr; gap: 32px; }
     .container { padding: 0 24px; }
     nav { padding: 0 24px; }
-    .nav-links { gap: 20px; }
-    .nav-links li:not(:last-child) { display: none; }
+    .nav-links { display: none; }
   }
 
   @media (max-width: 600px) {
@@ -1080,12 +1164,24 @@
     <span></span>
     CLEARSTRIKE ADVISORY
   </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#problem">The Problem</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#credentials">About</a></li>
     <li><a href="#contact" class="nav-cta">Schedule a Consultation</a></li>
   </ul>
+  <div class="nav-backdrop" aria-hidden="true"></div>
+  <div class="nav-mobile" aria-hidden="true">
+    <a href="#problem">The Problem</a>
+    <a href="#services">Services</a>
+    <a href="#credentials">About</a>
+    <a href="#contact" class="nav-cta">Schedule a Consultation</a>
+  </div>
 </nav>
 
 <!-- ── HERO ────────────────────────────────────────────────────────────────── -->
@@ -1503,6 +1599,51 @@
       }
     });
   });
+
+  // Mobile menu toggle for small screens
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMobile = document.querySelector('.nav-mobile');
+  const navBackdrop = document.querySelector('.nav-backdrop');
+
+  let savedScrollY = 0;
+
+  const lockScroll = () => {
+    savedScrollY = window.scrollY;
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.classList.add('no-scroll');
+  };
+
+  const unlockScroll = () => {
+    document.body.classList.remove('no-scroll');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollY);
+  };
+
+  const setMenuState = (open) => {
+    navMobile.classList.toggle('open', open);
+    navBackdrop.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    (open ? lockScroll : unlockScroll)();
+    navToggle.setAttribute('aria-expanded', open);
+    navMobile.setAttribute('aria-hidden', !open);
+    navBackdrop.setAttribute('aria-hidden', !open);
+  };
+
+  const closeMenu = () => setMenuState(false);
+  const toggleMenu = () => setMenuState(!navMobile.classList.contains('open'));
+
+  if (navToggle && navMobile && navBackdrop) {
+    navToggle.addEventListener('click', toggleMenu);
+    navBackdrop.addEventListener('click', closeMenu);
+
+    navMobile.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
 
   // Form submit handler (placeholder)
   document.querySelector('form').addEventListener('submit', e => {
