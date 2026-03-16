@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearStrike Advisory — Security Clarity for the Mid-Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #1B2A4A;
+    --navy-dk: #111d33;
+    --navy-lt: #243660;
+    --teal:    #0D7377;
+    --teal-lt: #14a0a6;
+    --teal-xs: #e8f5f5;
+    --gold:    #C49A28;
+    --gold-lt: #f0d077;
+    --cream:   #F8F6F1;
+    --white:   #FFFFFF;
+    --gray:    #F2F4F6;
+    --gray-md: #8A919E;
+    --gray-dk: #4A5568;
+    --red:     #B83232;
+    --red-lt:  #fdf0f0;
+    --green:   #1A7A45;
+    --green-lt:#f0faf4;
+    --orange:  #C45E1A;
+    --orange-lt:#fef4ec;
+    --text:    #1a2035;
+
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'DM Sans', system-ui, sans-serif;
+
+    --max: 1160px;
+    --radius: 3px;
+    --transition: 0.25s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy-dk); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+  /* ── Nav ─────────────────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(17,29,51,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(13,115,119,0.3);
+    padding: 0 40px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--teal-lt);
+    border-radius: 50%;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: color var(--transition);
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--teal-lt); }
+
+  .nav-cta {
+    background: var(--teal);
+    color: var(--white) !important;
+    padding: 8px 20px;
+    border-radius: var(--radius);
+    font-weight: 500 !important;
+    transition: background var(--transition) !important;
+  }
+  .nav-cta:hover { background: var(--teal-lt) !important; color: var(--white) !important; }
+
+  /* ── Hero ────────────────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy-dk);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: 64px;
+  }
+
+  /* Subtle geometric background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(13,115,119,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(196,154,40,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Fine grid texture */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow-line {
+    width: 32px; height: 1px;
+    background: var(--teal-lt);
+  }
+  .hero-eyebrow-text {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-lt);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 5.5vw, 68px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-lt);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 44px;
+    max-width: 520px;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all var(--transition);
+    border: 1px solid var(--teal);
+  }
+  .btn-primary:hover {
+    background: var(--teal-lt);
+    border-color: var(--teal-lt);
+    transform: translateY(-1px);
+  }
+  .btn-primary svg { flex-shrink: 0; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all var(--transition);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-ghost:hover {
+    color: var(--white);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  /* Hero urgency badge */
+  .hero-badge {
+    background: rgba(184,50,50,0.15);
+    border: 1px solid rgba(184,50,50,0.4);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 32px;
+  }
+  .hero-badge-dot {
+    width: 7px; height: 7px;
+    background: #e05555;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero-badge-text {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #e09090;
+    text-transform: uppercase;
+  }
+
+  /* Hero right card */
+  .hero-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 36px;
+    position: relative;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 4px 4px 0 0;
+  }
+
+  .hero-card-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .hero-card-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-item {
+    padding: 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+  }
+  .stat-value {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--teal-lt);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  .hero-card .btn-primary {
+    width: 100%;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  /* Hero bottom bar */
+  .hero-bottom {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex; align-items: center; gap: 48px;
+    width: 100%;
+  }
+  .hero-bottom-item {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-bottom-item svg { color: var(--teal-lt); flex-shrink: 0; }
+  .hero-bottom-item span {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── Section scaffolding ──────────────────────────────────────────────────── */
+  section { width: 100%; }
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-eyebrow-line {
+    width: 24px; height: 1px;
+    background: var(--teal);
+  }
+  .section-eyebrow-text {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  .section-lead {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--gray-dk);
+    margin-top: 16px;
+    max-width: 600px;
+  }
+
+  /* ── Problem section ─────────────────────────────────────────────────────── */
+  #problem {
+    background: var(--cream);
+    padding: 100px 0;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .problem-left {}
+  .problem-left p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--gray-dk);
+    margin-bottom: 20px;
+  }
+  .problem-quote {
+    border-left: 3px solid var(--teal);
+    padding: 20px 24px;
+    background: var(--white);
+    margin: 32px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .problem-quote p {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--navy);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .problem-right {}
+  .gap-card {
+    padding: 24px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    align-items: start;
+    transition: transform var(--transition);
+  }
+  .gap-card:hover { transform: translateX(4px); }
+
+  .gap-card-1 { background: var(--red-lt); border: 1px solid rgba(184,50,50,0.15); }
+  .gap-card-2 { background: var(--orange-lt); border: 1px solid rgba(196,94,26,0.15); }
+  .gap-card-3 { background: var(--orange-lt); border: 1px solid rgba(196,94,26,0.15); }
+
+  .gap-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .gap-card-1 .gap-num { background: var(--red); }
+  .gap-card-2 .gap-num { background: var(--orange); }
+  .gap-card-3 .gap-num { background: var(--orange); }
+
+  .gap-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .gap-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gray-dk);
+  }
+
+  .deadline-banner {
+    background: var(--navy);
+    color: var(--white);
+    padding: 20px 28px;
+    border-radius: var(--radius);
+    display: flex; align-items: center; gap: 20px;
+    margin-top: 24px;
+  }
+  .deadline-date {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--gold-lt);
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .deadline-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.7);
+  }
+  .deadline-text strong { color: var(--white); font-weight: 500; }
+
+  /* ── Services ────────────────────────────────────────────────────────────── */
+  #services {
+    background: var(--white);
+    padding: 100px 0;
+  }
+
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .service-card {
+    border: 1px solid #e2e6ea;
+    border-radius: 4px;
+    padding: 36px;
+    position: relative;
+    transition: all var(--transition);
+    background: var(--white);
+    overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+  .service-card:hover {
+    border-color: rgba(13,115,119,0.3);
+    box-shadow: 0 8px 32px rgba(27,42,74,0.08);
+    transform: translateY(-2px);
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  /* Entry / featured card */
+  .service-card.featured {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .service-card.featured::after {
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    transform: scaleX(1);
+  }
+  .service-card.featured .service-title,
+  .service-card.featured .service-desc { color: inherit; }
+  .service-card.featured .service-price { color: var(--gold-lt); }
+  .service-card.featured .service-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.65); }
+  .service-card.featured .service-detail { color: rgba(255,255,255,0.5); border-top-color: rgba(255,255,255,0.1); }
+
+  .service-tag {
+    display: inline-block;
+    background: var(--teal-xs);
+    color: var(--teal);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .service-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--gray-dk);
+    margin-bottom: 20px;
+  }
+
+  .service-price {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .service-detail {
+    font-size: 12px;
+    color: var(--gray-md);
+    letter-spacing: 0.04em;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid #e8ecf0;
+  }
+
+  /* Entry path arrows */
+  .entry-path {
+    background: var(--gray);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    margin-top: 24px;
+    grid-column: 1 / -1;
+  }
+  .entry-path-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .entry-path-flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    background: var(--white);
+    border: 1px solid #dde0e6;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+  .flow-step.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+  .flow-arrow {
+    color: var(--teal);
+    font-size: 18px;
+    font-weight: 300;
+    flex-shrink: 0;
+  }
+  .flow-note {
+    font-size: 12px;
+    color: var(--gray-md);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ── Credentials ─────────────────────────────────────────────────────────── */
+  #credentials {
+    background: var(--navy);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #credentials::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(13,115,119,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  #credentials::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  .creds-inner {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .creds-left .section-eyebrow-text { color: var(--teal-lt); }
+  .creds-left .section-eyebrow-line { background: var(--teal-lt); }
+  .creds-left .section-title { color: var(--white); }
+  .creds-left .section-lead { color: rgba(255,255,255,0.6); max-width: 100%; }
+
+  .creds-quote {
+    margin-top: 40px;
+    padding: 28px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: 3px solid var(--teal-lt);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .creds-quote p {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .creds-quote cite {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  .proof-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .proof-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--transition);
+  }
+  .proof-card:hover { border-color: rgba(13,115,119,0.4); }
+
+  .proof-card-accent {
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+  }
+  .proof-card:nth-child(1) .proof-card-accent { background: var(--red); }
+  .proof-card:nth-child(2) .proof-card-accent { background: var(--green); }
+  .proof-card:nth-child(3) .proof-card-accent { background: var(--teal-lt); }
+
+  .proof-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 10px;
+  }
+  .proof-finding {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .proof-outcome {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .proof-outcome strong {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+
+  /* ── CTA ─────────────────────────────────────────────────────────────────── */
+  #contact {
+    background: var(--cream);
+    padding: 100px 0;
+  }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .cta-left {}
+  .cta-left .section-title { margin-bottom: 20px; }
+  .cta-left p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--gray-dk);
+    margin-bottom: 16px;
+  }
+
+  .cta-checklist {
+    list-style: none;
+    margin: 28px 0;
+  }
+  .cta-checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 15px;
+    color: var(--gray-dk);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .cta-checklist li::before {
+    content: '';
+    display: block;
+    width: 18px; height: 18px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .cta-form-card {
+    background: var(--white);
+    border: 1px solid #e2e6ea;
+    border-radius: 4px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(27,42,74,0.06);
+  }
+  .cta-form-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 4px 4px 0 0;
+  }
+
+  .form-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .form-sub {
+    font-size: 13px;
+    color: var(--gray-md);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #d4d9e0;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--white);
+    transition: border-color var(--transition);
+    outline: none;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,115,119,0.08);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .btn-form {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 14px 24px;
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background var(--transition);
+    margin-top: 8px;
+  }
+  .btn-form:hover { background: var(--navy-lt); }
+
+  .form-disclaimer {
+    font-size: 11px;
+    color: var(--gray-md);
+    text-align: center;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Regulatory ticker ───────────────────────────────────────────────────── */
+  .reg-ticker {
+    background: var(--navy-dk);
+    border-top: 1px solid rgba(13,115,119,0.3);
+    padding: 14px 0;
+    overflow: hidden;
+  }
+  .ticker-track {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: ticker 28s linear infinite;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    flex-shrink: 0;
+  }
+  .ticker-item-dot {
+    width: 5px; height: 5px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .ticker-item-urgent { color: rgba(224,145,145,0.7); }
+  .ticker-item-urgent .ticker-item-dot { background: #e05555; }
+
+  /* ── Footer ──────────────────────────────────────────────────────────────── */
+  footer {
+    background: var(--navy-dk);
+    padding: 60px 0 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-brand-dot {
+    width: 7px; height: 7px;
+    background: var(--teal-lt);
+    border-radius: 50%;
+  }
+  .footer-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.45);
+    max-width: 320px;
+    margin-bottom: 20px;
+  }
+  .footer-domain {
+    font-size: 13px;
+    color: var(--teal-lt);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 120px);
+    gap: 8px 40px;
+  }
+  .footer-nav a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color var(--transition);
+    line-height: 2;
+  }
+  .footer-nav a:hover { color: var(--teal-lt); }
+
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.5;
+  }
+  .footer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(13,115,119,0.15);
+    border: 1px solid rgba(13,115,119,0.3);
+    border-radius: 2px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-lt);
+  }
+
+  /* ── Animations on scroll ────────────────────────────────────────────────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── Responsive ──────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px 60px; }
+    .hero-card { max-width: 400px; }
+    .hero-bottom { gap: 24px; flex-wrap: wrap; padding: 16px 24px; }
+    .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-header { grid-template-columns: 1fr; }
+    .creds-inner { grid-template-columns: 1fr; gap: 48px; }
+    .cta-grid { grid-template-columns: 1fr; gap: 48px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .container { padding: 0 24px; }
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links li:not(:last-child) { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .entry-path-flow { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span></span>
+    CLEARSTRIKE ADVISORY
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#credentials">About</a></li>
+    <li><a href="#contact" class="nav-cta">Schedule a Consultation</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="hero-badge-text">NYDFS Part 500 Annual Certification — April 15, 2026</span>
+      </div>
+
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Mid-Market Security Advisory</span>
+      </div>
+
+      <h1>Security clarity<br>for organizations<br>that deserve <em>better</em> counsel.</h1>
+
+      <p class="hero-sub">
+        We help mid-market financial services firms understand what their security spend is actually buying — and what it isn't. Deliverable-based engagements. No open-ended retainers. Every engagement produces something you can put in front of a regulator or a board.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Schedule a Consultation
+        </a>
+        <a href="#services" class="btn-ghost">See Our Services →</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-title">Start with the Diagnostic</div>
+      <div class="hero-card-sub">Half a day. A two-page report. A clear picture of where your security spend is working — and where it isn't.</div>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">$3.5K</div>
+          <div class="stat-label">Entry engagement</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">½ day</div>
+          <div class="stat-label">Time required</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">3×</div>
+          <div class="stat-label">Finding buckets</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Fee credited to follow-on</div>
+        </div>
+      </div>
+
+      <a href="#contact" class="btn-primary">
+        Book the Diagnostic — $3,500
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-bottom container">
+    <div class="hero-bottom-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>Commercial sector only — OCI-isolated</span>
+    </div>
+    <div class="hero-bottom-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <span>NYC metro — NYDFS specialists</span>
+    </div>
+    <div class="hero-bottom-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>€200M enterprise security background</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGULATORY TICKER ──────────────────────────────────────────────────── -->
+<div class="reg-ticker">
+  <div class="ticker-track">
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>NYDFS Annual Certification — April 15, 2026</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NYDFS Oct 2024 AI Cybersecurity Guidance — Examinable Now</span>
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>AI Vendor Training Exclusion Clauses — Required by NYDFS</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NY RAISE Act — Effective December 2025</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NYDFS TPSP Guidance — October 2025</span>
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>DORA — EU Digital Operational Resilience Act — Effective January 2025</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>NYDFS Annual Certification — April 15, 2026</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NYDFS Oct 2024 AI Cybersecurity Guidance — Examinable Now</span>
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>AI Vendor Training Exclusion Clauses — Required by NYDFS</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NY RAISE Act — Effective December 2025</span>
+    <span class="ticker-item"><span class="ticker-item-dot"></span>NYDFS TPSP Guidance — October 2025</span>
+    <span class="ticker-item ticker-item-urgent"><span class="ticker-item-dot"></span>DORA — EU Digital Operational Resilience Act — Effective January 2025</span>
+  </div>
+</div>
+
+<!-- ── PROBLEM ────────────────────────────────────────────────────────────── -->
+<section id="problem">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="problem-left fade-up">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">The Problem</span>
+        </div>
+        <h2 class="section-title">The SIEM isn't the problem.<br>It's a <em>symptom.</em></h2>
+
+        <div class="problem-quote">
+          <p>"Most mid-market organizations have bought enterprise-grade detection capability and built it on top of foundational gaps they've never closed. The SIEM is generating 40,000 alerts a day. The SOC can action 200 of them. Nobody is asking why."</p>
+        </div>
+
+        <p>The dominant model in mid-market security spending sells you the idea that security is fundamentally a detection and alerting problem — solved by more data, more connectors, more dashboards. For most organizations at your scale, that is the wrong architecture.</p>
+
+        <p>Identity gaps, shadow AI tools with client data flowing to uncontrolled vendors, and AI governance that doesn't survive regulator scrutiny — these are the real exposure. And they are almost always cheaper to close than the detection overhead sitting on top of them.</p>
+
+        <div class="deadline-banner">
+          <div class="deadline-date">Apr 15</div>
+          <div class="deadline-text">
+            <strong>NYDFS Part 500 Annual Certification Deadline.</strong><br>
+            Your CEO or CISO certifies compliance under oath — including AI-related controls. If those controls aren't in place, the certification is inaccurate.
+          </div>
+        </div>
+      </div>
+
+      <div class="problem-right fade-up">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">The Three Gaps We Find in Almost Every Client</span>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="gap-card gap-card-1">
+          <div class="gap-num">1</div>
+          <div>
+            <div class="gap-title">Your risk assessment doesn't mention AI.</div>
+            <div class="gap-body">NYDFS October 2024 guidance is explicit. If AI-specific threats — deepfake social engineering, shadow AI data exposure, vendor AI risk — aren't documented, your risk assessment is incomplete for 2026 examination purposes.</div>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card-2">
+          <div class="gap-num">2</div>
+          <div>
+            <div class="gap-title">Your AI vendor contracts are missing required clauses.</div>
+            <div class="gap-body">NYDFS October 2025 TPSP Guidance requires training exclusion clauses, data use restrictions, and NPI handling provisions in all AI vendor contracts. Most standard enterprise agreements — including recent ones from major vendors — don't include all of these.</div>
+          </div>
+        </div>
+
+        <div class="gap-card gap-card-3">
+          <div class="gap-num">3</div>
+          <div>
+            <div class="gap-title">Employees are using AI tools with no policy or training.</div>
+            <div class="gap-body">Shadow AI is not a theoretical risk. In almost every organization we engage, employees are pasting client data into uncontrolled AI tools with no policy, no monitoring, and no approved alternative. NYDFS requires a written acceptable use policy and deepfake-aware security training — by name.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ────────────────────────────────────────────────────────────── -->
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">Services</span>
+        </div>
+        <h2 class="section-title">Every engagement ends<br>with something <em>tangible.</em></h2>
+      </div>
+      <p class="section-lead" style="max-width: 320px; margin-top: 0;">No open-ended retainers. No discovery phases that become six-month engagements. You know what you're getting, what it costs, and when it's done.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- Entry -->
+      <div class="service-card featured fade-up">
+        <span class="service-tag">Start Here — Loss-Leader Entry</span>
+        <span class="service-icon">🔍</span>
+        <div class="service-title">Security Spend Rationalization Diagnostic</div>
+        <p class="service-desc">We spend half a day with your contracts, your license data, and your renewal calendar. At the end, you have a two-page document that tells you what to stop paying for, what gap to close first, and what you're about to buy that you probably don't need yet.</p>
+        <div class="service-price">$3,500 – $5,000</div>
+        <div class="service-detail">Half-day engagement  ·  Two-page written output  ·  Fee credited to any follow-on</div>
+      </div>
+
+      <!-- ZT -->
+      <div class="service-card fade-up">
+        <span class="service-tag">Assessment</span>
+        <span class="service-icon">🔐</span>
+        <div class="service-title">Zero Trust Readiness Assessment</div>
+        <p class="service-desc">Full assessment against the five Zero Trust pillars — Identity, Devices, Network, Applications, Data. Produces a scored gap analysis and prioritized remediation roadmap you can take to your board and your budget cycle.</p>
+        <div class="service-price">$15,000 – $35,000</div>
+        <div class="service-detail">3–5 weeks  ·  Scored report + remediation roadmap  ·  Board-ready summary included</div>
+      </div>
+
+      <!-- AI Gov -->
+      <div class="service-card fade-up">
+        <span class="service-tag">Compliance Sprint</span>
+        <span class="service-icon">🤖</span>
+        <div class="service-title">AI Governance Starter</div>
+        <p class="service-desc">The NYDFS AI compliance package: updated risk assessment addendum, AI acceptable use policy, vendor clause templates, AI tool inventory, and a board briefing deck. Everything your CEO or CISO needs to certify accurately on April 15.</p>
+        <div class="service-price">$10,000 – $22,000</div>
+        <div class="service-detail">3–4 weeks  ·  Examiner-ready documentation  ·  NYDFS Part 500 aligned</div>
+      </div>
+
+      <!-- vCISO -->
+      <div class="service-card fade-up">
+        <span class="service-tag">Ongoing Advisory</span>
+        <span class="service-icon">🛡️</span>
+        <div class="service-title">vCISO Advisory Retainer</div>
+        <p class="service-desc">Ongoing security leadership without the full-time hire. We become the strategic allocation function — deciding what you buy next, keeping your board informed, and ensuring the program matures rather than drifts from one compliance deadline to the next.</p>
+        <div class="service-price">$4,000 – $8,500 / month</div>
+        <div class="service-detail">Ongoing  ·  Quarterly board reporting  ·  Strategic and responsive coverage</div>
+      </div>
+
+      <!-- Flow -->
+      <div class="entry-path fade-up">
+        <div class="entry-path-title">The Natural Progression</div>
+        <div class="entry-path-flow">
+          <div class="flow-step active">Diagnostic — $3.5K</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">ZT Readiness  or  AI Governance Sprint</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">vCISO Retainer</div>
+        </div>
+        <p class="flow-note">Diagnostic fee is always credited toward the follow-on engagement. The entry price is a signal, not a discount — it reflects how we work: earn trust first, ask for the larger commitment second.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CREDENTIALS ────────────────────────────────────────────────────────── -->
+<section id="credentials">
+  <div class="container">
+    <div class="creds-inner">
+      <div class="creds-left fade-up">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">Why ClearStrike</span>
+        </div>
+        <h2 class="section-title" style="color: var(--white);">We've been in rooms<br>most advisors <em>haven't.</em></h2>
+        <p class="section-lead">Our principal comes from a multinational bank with a €200M annual cybersecurity budget — allocating across Zero Trust pillars, closing ECB audit findings, and advising on the kind of programs that mid-market firms are trying to build from scratch. That's not a credential. It's a different kind of conversation.</p>
+
+        <div class="creds-quote">
+          <p>"Most organizations at your size are paying for three things they don't need, missing two things they do, and have at least one planned purchase that the numbers say they should push out. The ratio is almost always the same."</p>
+          <cite>ClearStrike Advisory — Entry Conversation</cite>
+        </div>
+      </div>
+
+      <div class="proof-cards fade-up">
+        <div style="margin-bottom: 20px;">
+          <div class="section-eyebrow" style="margin-bottom: 0;">
+            <div class="section-eyebrow-line" style="background: rgba(255,255,255,0.3);"></div>
+            <span class="section-eyebrow-text" style="color: rgba(255,255,255,0.4);">Proof Points</span>
+          </div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-accent"></div>
+          <div class="proof-label">SIEM Support Right-Sizing — Federal Client</div>
+          <div class="proof-finding">Premium enterprise support tier on Splunk/Carahsoft bundle — auto-renewing annually without review.</div>
+          <div class="proof-outcome">Support ticket analysis showed 94%+ of interactions were standard-tier issues. <strong>Right-sized on renewal. Immediate recurring savings. Zero operational impact.</strong></div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-accent"></div>
+          <div class="proof-label">Hardware Refresh Deferral — Federal Client</div>
+          <div class="proof-finding">Palo Alto firewall fleet refresh budgeted on vendor-recommended lifecycle, not documented coverage gap.</div>
+          <div class="proof-outcome">Warranty and maintenance analytics showed three years of active coverage remaining. <strong>Deferral recommended and supported by data. Capital expenditure eliminated. Savings in the millions.</strong></div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-accent"></div>
+          <div class="proof-label">The Pattern Behind Both</div>
+          <div class="proof-finding">No complex technology required. No penetration testing. No threat modeling.</div>
+          <div class="proof-outcome">Both findings required assembling contract data, maintenance records, and support logs — and letting the data speak. <strong>That information existed inside both organizations. It had simply never been looked at together.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="cta-grid">
+      <div class="cta-left fade-up">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">Schedule a Consultation</span>
+        </div>
+        <h2 class="section-title">A 30-minute conversation<br>costs you <em>nothing.</em></h2>
+        <p>Tell us where you are. We'll tell you honestly whether we can help — and if so, what the right starting point is. No pitch deck. No pre-packaged solution looking for a problem.</p>
+        <p>If you're facing the April 15 NYDFS certification and aren't confident in your AI governance posture, that conversation has a deadline. Let's have it now.</p>
+
+        <ul class="cta-checklist">
+          <li>Free 30-minute initial consultation — no obligation</li>
+          <li>Diagnostic can be scoped and scheduled within 2 weeks</li>
+          <li>All engagements produce examiner-ready written deliverables</li>
+          <li>Commercial sector only — strict OCI separation from federal work</li>
+          <li>NYC metro and remote engagements available</li>
+        </ul>
+      </div>
+
+      <div class="cta-form-card fade-up">
+        <div class="form-title">Let's talk.</div>
+        <div class="form-sub">Fill this out and we'll respond within one business day.</div>
+
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Jane">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Work Email</label>
+            <input type="email" placeholder="jane@yourfirm.com">
+          </div>
+
+          <div class="form-group">
+            <label>Organization</label>
+            <input type="text" placeholder="Firm name">
+          </div>
+
+          <div class="form-group">
+            <label>I'm most interested in</label>
+            <select>
+              <option value="">— Select a starting point —</option>
+              <option>Security Spend Diagnostic ($3,500)</option>
+              <option>AI Governance Starter — NYDFS April 15 deadline</option>
+              <option>Zero Trust Readiness Assessment</option>
+              <option>vCISO Advisory Retainer</option>
+              <option>Just a conversation for now</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Anything you'd like us to know</label>
+            <textarea placeholder="Upcoming audit, specific concern, regulatory deadline — whatever is top of mind."></textarea>
+          </div>
+
+          <button type="submit" class="btn-form">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
+          <div class="form-disclaimer">We respond within one business day. No marketing lists. No unsolicited follow-up.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-brand-dot"></div>
+          CLEARSTRIKE ADVISORY
+        </div>
+        <p class="footer-desc">Security clarity for mid-market financial services organizations. Deliverable-based engagements. NYDFS Part 500 specialists. NYC metro.</p>
+        <div class="footer-domain">clearstrikeadvisory.com</div>
+      </div>
+
+      <nav class="footer-nav">
+        <a href="#problem">The Problem</a>
+        <a href="#services">Services</a>
+        <a href="#credentials">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#services">Diagnostic</a>
+        <a href="#services">AI Governance</a>
+        <a href="#services">Zero Trust</a>
+        <a href="#services">vCISO</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 ClearStrike Advisory. Commercial sector only. All IP original. OCI-isolated from federal engagements.<br>This site is not legal advice. ClearStrike Advisory is not a law firm.</p>
+      <div class="footer-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        NYC Metro · NYDFS Specialists
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-triggered fade-ins
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Form submit handler (placeholder)
+  document.querySelector('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = document.querySelector('.btn-form');
+    btn.textContent = '✓ Message sent — we\'ll be in touch within one business day.';
+    btn.style.background = 'var(--teal)';
+    btn.disabled = true;
+  });
+</script>
+
+</body>
+</html>
