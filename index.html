@@ -57,7 +57,7 @@
   ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
 
   /* ── Nav ─────────────────────────────────────────────────────────────────── */
-  nav {
+  .nav-main {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: rgba(17,29,51,0.96);
     backdrop-filter: blur(12px);
@@ -110,35 +110,36 @@
 
   /* ── Mobile nav toggle ────────────────────────────────────────────────────── */
   .nav-toggle {
-    background: rgba(255,255,255,0.12);
-    border: none;
-    border-radius: 999px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
     color: var(--white);
     cursor: pointer;
     padding: 10px;
-    margin-left: 12px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
-    gap: 4px;
-    width: 40px;
-    height: 40px;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
     transition: background 0.2s ease;
+    position: relative;
+    z-index: 200;
   }
   .nav-toggle:hover {
-    background: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.1);
   }
   .nav-toggle span {
     display: block;
     width: 100%;
-    height: 3px;
-    border-radius: 1.5px;
+    height: 2px;
+    border-radius: 1px;
     background: currentColor;
     transition: transform 0.25s ease, opacity 0.25s ease;
   }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   .nav-backdrop {
     position: fixed;
@@ -161,36 +162,71 @@
   .nav-mobile {
     position: fixed;
     inset: 0;
-    background: rgba(17,29,51,0.96);
-    backdrop-filter: blur(14px);
+    background: var(--navy-dk);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 26px;
-    padding: 120px 40px 60px;
-    transform: translateY(-100%);
-    transition: transform 0.25s ease, opacity 0.25s ease;
-    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
     pointer-events: none;
     z-index: 130;
   }
   .nav-mobile.open {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateX(0);
     pointer-events: auto;
   }
-  .nav-mobile a {
-    font-size: 18px;
+  .nav-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    border-bottom: 1px solid rgba(13,115,119,0.3);
+  }
+  .nav-close {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    color: var(--white);
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .nav-close:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .nav-mobile-links {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 8px;
+  }
+  .nav-mobile-links a {
+    font-size: 16px;
+    font-weight: 500;
     color: var(--white);
     text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 14px 20px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
   }
-  .nav-mobile .nav-cta {
-    width: 100%;
-    max-width: 280px;
-    justify-content: center;
+  .nav-mobile-links a:hover {
+    background: rgba(255,255,255,0.06);
+  }
+  .nav-mobile-links .nav-cta {
+    margin-top: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    display: block;
+    text-align: center;
+  }
+  .nav-mobile-links .nav-cta:hover {
+    background: var(--teal) !important;
   }
 
   /* ── Hero ────────────────────────────────────────────────────────────────── */
@@ -610,6 +646,26 @@
     transition: all var(--transition);
     background: var(--white);
     overflow: hidden;
+  }
+
+  /* ── Sticky card stacking (mobile) ──────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .services-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-card {
+      position: sticky;
+      border-radius: 12px;
+      box-shadow: 0 -4px 20px rgba(27,42,74,0.12);
+      margin-bottom: -8px;
+    }
+    .service-card:nth-child(1) { top: 64px; z-index: 1; }
+    .service-card:nth-child(2) { top: 76px; z-index: 2; }
+    .service-card:nth-child(3) { top: 88px; z-index: 3; }
+    .service-card:nth-child(4) { top: 100px; z-index: 4; }
+    .entry-path { position: sticky; top: 112px; z-index: 5; border-radius: 12px; box-shadow: 0 -4px 20px rgba(27,42,74,0.12); margin-top: 0; }
   }
   .service-card::after {
     content: '';
@@ -1079,9 +1135,15 @@
   }
 
   .footer-nav {
+    position: static;
     display: grid;
     grid-template-columns: repeat(2, 120px);
     gap: 8px 40px;
+    height: auto;
+    background: none;
+    backdrop-filter: none;
+    border-bottom: none;
+    padding: 0;
   }
   .footer-nav a {
     font-size: 13px;
@@ -1134,19 +1196,22 @@
   .fade-up:nth-child(4) { transition-delay: 0.3s; }
 
   /* ── Responsive ──────────────────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav-main { padding: 0 24px; }
+  }
+
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px 60px; }
     .hero-card { max-width: 400px; }
     .hero-bottom { gap: 24px; flex-wrap: wrap; padding: 16px 24px; }
     .problem-grid { grid-template-columns: 1fr; gap: 40px; }
-    .services-grid { grid-template-columns: 1fr; }
     .services-header { grid-template-columns: 1fr; }
     .creds-inner { grid-template-columns: 1fr; gap: 48px; }
     .cta-grid { grid-template-columns: 1fr; gap: 48px; }
     .footer-inner { grid-template-columns: 1fr; gap: 32px; }
     .container { padding: 0 24px; }
-    nav { padding: 0 24px; }
-    .nav-links { display: none; }
   }
 
   @media (max-width: 600px) {
@@ -1159,30 +1224,39 @@
 <body>
 
 <!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
-<nav>
+<nav class="nav-main">
   <a href="#" class="nav-logo">
     <span></span>
     CLEARSTRIKE ADVISORY
   </a>
-  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
   <ul class="nav-links">
     <li><a href="#problem">The Problem</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#credentials">About</a></li>
     <li><a href="#contact" class="nav-cta">Schedule a Consultation</a></li>
   </ul>
-  <div class="nav-backdrop" aria-hidden="true"></div>
-  <div class="nav-mobile" aria-hidden="true">
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+<div class="nav-backdrop" aria-hidden="true"></div>
+<div class="nav-mobile" aria-hidden="true">
+  <div class="nav-mobile-header">
+    <a href="#" class="nav-logo">
+      <span></span>
+      CLEARSTRIKE ADVISORY
+    </a>
+    <button class="nav-close" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="nav-mobile-links">
     <a href="#problem">The Problem</a>
     <a href="#services">Services</a>
     <a href="#credentials">About</a>
     <a href="#contact" class="nav-cta">Schedule a Consultation</a>
   </div>
-</nav>
+</div>
 
 <!-- ── HERO ────────────────────────────────────────────────────────────────── -->
 <section class="hero">
@@ -1554,7 +1628,7 @@
         <div class="footer-domain">clearstrikeadvisory.com</div>
       </div>
 
-      <nav class="footer-nav">
+      <div class="footer-nav">
         <a href="#problem">The Problem</a>
         <a href="#services">Services</a>
         <a href="#credentials">About</a>
@@ -1563,7 +1637,7 @@
         <a href="#services">AI Governance</a>
         <a href="#services">Zero Trust</a>
         <a href="#services">vCISO</a>
-      </nav>
+      </div>
     </div>
 
     <div class="footer-bottom">
@@ -1632,12 +1706,32 @@
   const closeMenu = () => setMenuState(false);
   const toggleMenu = () => setMenuState(!navMobile.classList.contains('open'));
 
+  const navClose = document.querySelector('.nav-close');
+
   if (navToggle && navMobile && navBackdrop) {
     navToggle.addEventListener('click', toggleMenu);
     navBackdrop.addEventListener('click', closeMenu);
+    if (navClose) navClose.addEventListener('click', closeMenu);
 
-    navMobile.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', closeMenu);
+    navMobile.querySelectorAll('.nav-mobile-links a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        const target = href && document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          // Close menu without scroll restoration
+          navMobile.classList.remove('open');
+          navBackdrop.classList.remove('open');
+          navToggle.classList.remove('open');
+          document.body.classList.remove('no-scroll');
+          document.body.style.top = '';
+          navToggle.setAttribute('aria-expanded', false);
+          navMobile.setAttribute('aria-hidden', true);
+          navBackdrop.setAttribute('aria-hidden', true);
+          // Navigate to section
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
 
     document.addEventListener('keydown', (e) => {
