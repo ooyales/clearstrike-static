@@ -1565,31 +1565,38 @@
         <div class="form-title">Let's talk.</div>
         <div class="form-sub">Fill this out and we'll respond within one business day.</div>
 
-        <form>
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Web3Forms access key — get yours at https://web3forms.com -->
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New consultation request — ClearStrike Advisory">
+          <input type="hidden" name="from_name" value="ClearStrike Website">
+          <!-- Honeypot anti-spam -->
+          <input type="checkbox" name="botcheck" style="display: none;">
+
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
-              <input type="text" placeholder="Jane">
+              <input type="text" name="first_name" placeholder="Jane" required>
             </div>
             <div class="form-group">
               <label>Last Name</label>
-              <input type="text" placeholder="Smith">
+              <input type="text" name="last_name" placeholder="Smith" required>
             </div>
           </div>
 
           <div class="form-group">
             <label>Work Email</label>
-            <input type="email" placeholder="jane@yourfirm.com">
+            <input type="email" name="email" placeholder="jane@yourfirm.com" required>
           </div>
 
           <div class="form-group">
             <label>Organization</label>
-            <input type="text" placeholder="Firm name">
+            <input type="text" name="organization" placeholder="Firm name" required>
           </div>
 
           <div class="form-group">
             <label>I'm most interested in</label>
-            <select>
+            <select name="interest" required>
               <option value="">— Select a starting point —</option>
               <option>Security Spend Diagnostic ($3,500)</option>
               <option>AI Governance Starter — NYDFS April 15 deadline</option>
@@ -1601,7 +1608,7 @@
 
           <div class="form-group">
             <label>Anything you'd like us to know</label>
-            <textarea placeholder="Upcoming audit, specific concern, regulatory deadline — whatever is top of mind."></textarea>
+            <textarea name="message" placeholder="Upcoming audit, specific concern, regulatory deadline — whatever is top of mind."></textarea>
           </div>
 
           <button type="submit" class="btn-form">
@@ -1739,13 +1746,36 @@
     });
   }
 
-  // Form submit handler (placeholder)
-  document.querySelector('form').addEventListener('submit', e => {
+  // Form submit handler — Web3Forms
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = document.querySelector('.btn-form');
-    btn.textContent = '✓ Message sent — we\'ll be in touch within one business day.';
-    btn.style.background = 'var(--teal)';
+    const btn = form.querySelector('.btn-form');
+    const originalHTML = btn.innerHTML;
+    btn.textContent = 'Sending...';
     btn.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        btn.textContent = '\u2713 Message sent \u2014 we\u2019ll be in touch within one business day.';
+        btn.style.background = 'var(--teal)';
+        form.reset();
+      } else {
+        btn.textContent = 'Something went wrong \u2014 please email us directly.';
+        btn.style.background = 'var(--red)';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Network error \u2014 please try again.';
+      btn.style.background = 'var(--red)';
+      btn.disabled = false;
+    }
   });
 </script>
 
